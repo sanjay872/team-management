@@ -1,0 +1,8 @@
+spring:
+  datasource:
+    url: ${DB_URL} # env variable jdbc:mysql://localhost:3306/db_name
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
+  jpa:
+    hibernate:
+      ddl-auto: validate   # No auto creation of table.
