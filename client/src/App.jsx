@@ -12,7 +12,7 @@ function App() {
             name="search"
             id="search"
             placeholder="Search by Name or Email Address"
-            className="border border-gray-300 outline-none w-[480px] rounded-full pl-6 pr-12 py-4"
+            className="border border-gray-300 outline-none w-[480px] rounded-full pl-6 pr-12 py-4 focus:ring-2 focus:ring-black-200 focus:border-black-400"
           />
           <img
             src={Search}
