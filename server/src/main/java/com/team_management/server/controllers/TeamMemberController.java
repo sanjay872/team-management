@@ -3,8 +3,6 @@ package com.team_management.server.controllers;
 import com.team_management.server.dtos.TeamMemberRequest;
 import com.team_management.server.dtos.TeamMemberResponse;
 import com.team_management.server.entities.TeamMember;
-import com.team_management.server.enums.TeamFunction;
-import com.team_management.server.enums.TeamRole;
 import com.team_management.server.mapper.TeamMemberMapper;
 import com.team_management.server.services.TeamMemberService;
 import jakarta.validation.Valid;
@@ -25,8 +23,8 @@ public class TeamMemberController {
     @GetMapping
     public ResponseEntity<List<TeamMemberResponse>> list(
             @RequestParam(required = false) String q,
-            @RequestParam(required = false) TeamRole role,
-            @RequestParam(required = false, name = "function") TeamFunction function
+            @RequestParam(required = false) String role,
+            @RequestParam(required = false, name = "function") String function
     ) {
         return ResponseEntity.status(HttpStatus.OK).body(service.get(q,role,function).stream().map(TeamMemberMapper::toTeamMemberResponse).toList());
     }

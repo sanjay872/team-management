@@ -1,7 +1,5 @@
 package com.team_management.server.entities;
 
-import com.team_management.server.enums.TeamFunction;
-import com.team_management.server.enums.TeamRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -48,11 +46,11 @@ public class TeamMember {
     @Column(name = "updated_at", nullable = false)
     private Instant updatedAt;
 
-    public TeamMember(Long id, String fullName, String email, TeamFunction function, TeamRole role) {
+    public TeamMember(Long id, String fullName, String email, String function, String role) {
         this.id = id;
         this.fullName = fullName;
         this.email = email;
-        this.function = function.toString();
-        this.role = role.toString();
+        this.function = function;
+        this.role = role;
     }
 }

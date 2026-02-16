@@ -1,8 +1,6 @@
 package com.team_management.server.specifications;
 
 import com.team_management.server.entities.TeamMember;
-import com.team_management.server.enums.TeamFunction;
-import com.team_management.server.enums.TeamRole;
 import org.springframework.data.jpa.domain.Specification;
 
 public class TeamMemberSpecification {
@@ -16,13 +14,13 @@ public class TeamMemberSpecification {
         );
     }
 
-    public static Specification<TeamMember> role(TeamRole role) {
+    public static Specification<TeamMember> role(String role) {
         if (role == null) return null;
-        return (root, query, cb) -> cb.equal(root.get("role"), role.name());
+        return (root, query, cb) -> cb.equal(root.get("role"), role);
     }
 
-    public static Specification<TeamMember> function(TeamFunction fn) {
+    public static Specification<TeamMember> function(String fn) {
         if (fn == null) return null;
-        return (root, query, cb) -> cb.equal(root.get("function"), fn.name());
+        return (root, query, cb) -> cb.equal(root.get("function"), fn);
     }
 }

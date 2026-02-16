@@ -1,23 +1,17 @@
 package com.team_management.server.services;
 
 import com.team_management.server.dtos.TeamMemberRequest;
-import com.team_management.server.dtos.TeamMemberResponse;
 import com.team_management.server.entities.TeamMember;
-import com.team_management.server.enums.TeamFunction;
-import com.team_management.server.enums.TeamRole;
 import com.team_management.server.exceptionHandlers.exceptions.ConflictException;
 import com.team_management.server.exceptionHandlers.exceptions.NotFoundException;
 import com.team_management.server.mapper.TeamMemberMapper;
 import com.team_management.server.repository.TeamMemberRepository;
 import com.team_management.server.specifications.TeamMemberSpecification;
-import org.jspecify.annotations.NonNull;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class TeamMemberService {
@@ -42,7 +36,7 @@ public class TeamMemberService {
         return repo.save(teamMember);
     }
 
-    public List<TeamMember> get(String q, TeamRole role, TeamFunction function) {
+    public List<TeamMember> get(String q, String role, String function) {
         Specification<TeamMember> spec = Specification.unrestricted();
 
         if (q != null && !q.isBlank()) {
