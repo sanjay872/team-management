@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import Avatar from "./assets/Avatar.png"
 import Search from "./assets/search 1.png"
 
 import AddEditMemberModal from "./components/AddEditMemberModal"
 import Toast from "./components//Toast"
+import DeleteMemberModal from "./components/DeleteMemberModal"
+import FilterChip from "./components/FilterChip"
 
 function App() {
   const [members, setMembers] = useState([])
@@ -15,6 +17,11 @@ function App() {
   const [editingMember, setEditingMember] = useState(null)
 
   const [toast, setToast] = useState(null)
+
+  const [activeDropdown, setActiveDropdown] = useState(null)
+  const [deleteOpen, setDeleteOpen] = useState(false)
+  const [deleteTarget, setDeleteTarget] = useState(null)
+  const dropdownRef = useRef(null)
 
   useEffect(() => {
     const fetchMembers = async () => {
@@ -30,7 +37,24 @@ function App() {
     fetchMembers()
   }, [search, role, func])
 
-  // 🔥 Create or Update
+  useEffect(() => {
+  const handleClickOutside = (event) => {
+    if (
+      dropdownRef.current &&
+      !dropdownRef.current.contains(event.target)
+    ) {
+      setActiveDropdown(null)
+    }
+  }
+
+  document.addEventListener("mousedown", handleClickOutside)
+
+  return () => {
+    document.removeEventListener("mousedown", handleClickOutside)
+  }
+}, [])
+
+
   const handleSubmit = async (form) => {
     if (editingMember) {
       const res = await fetch(
@@ -77,7 +101,6 @@ function App() {
     <div className="min-h-screen bg-gray-50 flex justify-center">
       <div className="w-[900px] mt-12 space-y-8">
 
-        {/* Search */}
         <div className="relative w-[480px]">
           <input
             value={search}
@@ -93,7 +116,6 @@ function App() {
           />
         </div>
 
-        {/* Header */}
         <div className="flex justify-between">
           <div>
             <h1 className="text-3xl font-bold">
@@ -116,36 +138,32 @@ function App() {
           </button>
         </div>
 
-        {/* Filters */}
         <div className="flex gap-4">
-          <select
+          <FilterChip
+            label="Function"
             value={func}
-            onChange={(e) =>
-              setFunc(e.target.value)
-            }
-            className="bg-blue-100 px-5 py-2 rounded-full"
-          >
-            <option value="">Function</option>
-            <option>Engineering</option>
-            <option>Marketing & Sales</option>
-            <option>IT</option>
-            <option>Product</option>
-          </select>
+            options={[
+              "Engineering",
+              "Marketing & Sales",
+              "IT",
+              "Product"
+            ]}
+            onChange={(val) => setFunc(val)}
+          />
 
-          <select
+          <FilterChip
+            label="Role"
             value={role}
-            onChange={(e) =>
-              setRole(e.target.value)
-            }
-            className="bg-blue-100 px-5 py-2 rounded-full"
-          >
-            <option value="">Role</option>
-            <option>Admin</option>
-            <option>Contributor</option>
-          </select>
+            options={[
+              "Admin",
+              "Contributor"
+            ]}
+            onChange={(val) => setRole(val)}
+          />
+
         </div>
 
-        <div className="bg-white rounded-xl shadow overflow-hidden">
+        <div className="bg-white rounded-xl shadow">
 
   <table className="w-full border-separate border-spacing-0">
     
@@ -193,12 +211,55 @@ function App() {
               </span>
             </td>
 
-            <td className="px-6 py-4 text-center">⋮</td>
+            <td className="px-6 py-4 text-center relative">
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation()
+                setActiveDropdown(
+                  activeDropdown === member.id ? null : member.id
+                )
+              }}
+              className="text-lg"
+            >
+              ⋮
+            </button>
+
+            {activeDropdown === member.id && (
+              <div
+                ref={dropdownRef}
+                className="absolute right-6 mt-2 w-32 bg-white border rounded-md shadow-lg z-50"
+              >
+                
+                <button
+                  onClick={() => {
+                    setEditingMember(member)
+                    setModalOpen(true)
+                    setActiveDropdown(null)
+                  }}
+                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
+                >
+                  Edit
+                </button>
+
+                <button
+                  onClick={() => {
+                    setDeleteTarget(member)
+                    setDeleteOpen(true)
+                  }}
+                  className="block w-full text-left px-4 py-2 text-red-500 hover:bg-gray-100"
+                >
+                  Delete
+                </button>
+
+              </div>
+            )}
+            </td>
+
           </tr>
         ))
       )}
-    </tbody>
-
+     </tbody>
   </table>
 </div>
 
@@ -213,6 +274,20 @@ function App() {
         <Toast
           message={toast}
           onClose={() => setToast(null)}
+        />
+
+        <DeleteMemberModal
+          open={deleteOpen}
+          member={deleteTarget}
+          onClose={() => {
+            setDeleteOpen(false)
+            setDeleteTarget(null)
+          }}
+          onConfirm={(id) => {
+            handleDelete(id)
+            setDeleteOpen(false)
+            setDeleteTarget(null)
+          }}
         />
 
       </div>

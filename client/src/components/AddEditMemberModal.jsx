@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react"
+import FormDropdown from "./FormDropdown"
 
 export default function AddEditMemberModal({
   open,
@@ -6,111 +7,134 @@ export default function AddEditMemberModal({
   onClose,
   onSubmit
 }) {
-  const [form, setForm] = useState({
+  const emptyState = {
     fullName: "",
     email: "",
     function: "",
     role: ""
-  })
+  }
+
+  const [form, setForm] = useState(emptyState)
 
   useEffect(() => {
     const updateState=()=>{
+      if (open) {
         if (member) {
-            setForm(member)
+          setForm(member)
         } else {
-            setForm({
-                fullName: "",
-                email: "",
-                function: "",
-                role: ""
-            })
+          setForm(emptyState)
         }
+      }
     }
     updateState();
-  }, [member])
+  }, [member, open])
 
   if (!open) return null
 
-  const emailValid = /\S+@\S+\.\S+/.test(form.email)
+  const emailValid = /\S+@\S+\.\S+/.test(form.email.trim())
 
   const isValid =
-    form.fullName &&
+    form.fullName.trim() &&
     emailValid &&
     form.function &&
     form.role
 
   return (
-    <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
-      <div className="bg-white w-[420px] rounded-xl p-6 space-y-5 shadow-lg">
+    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50">
+      <div className="bg-white w-[420px] rounded-xl p-6 shadow-xl">
 
-        <div className="flex justify-between items-center">
-          <h2 className="text-xl font-semibold">
+        {/* Header */}
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-lg font-semibold">
             {member ? "Edit Team Member" : "Add Team Member"}
           </h2>
-          <button onClick={onClose}>✕</button>
+          <button
+            onClick={onClose}
+            className="text-gray-500 text-lg"
+          >
+            ✕
+          </button>
         </div>
 
-        <div className="space-y-3">
+        {/* Name */}
+        <div className="mb-4">
+          <label className="text-sm font-medium block mb-1">
+            Name
+          </label>
           <input
-            placeholder="Name"
+            placeholder="Jane Doe"
             value={form.fullName}
             onChange={(e) =>
               setForm({ ...form, fullName: e.target.value })
             }
-            className="w-full border rounded-full px-4 py-3"
+            className="w-full border border-gray-300 rounded-full px-4 py-3 outline-none focus:border-gray-400"
           />
-
-          <div>
-            <input
-              placeholder="Email"
-              value={form.email}
-              onChange={(e) =>
-                setForm({ ...form, email: e.target.value })
-              }
-              className={`w-full border rounded-full px-4 py-3 ${
-                form.email && !emailValid
-                  ? "border-red-500"
-                  : ""
-              }`}
-            />
-            {form.email && !emailValid && (
-              <p className="text-red-500 text-sm mt-1">
-                Please enter a valid email address.
-              </p>
-            )}
-          </div>
-
-          <select
-            value={form.function}
-            onChange={(e) =>
-              setForm({ ...form, function: e.target.value })
-            }
-            className="w-full border rounded-full px-4 py-3"
-          >
-            <option value="">Select Function</option>
-            <option>Engineering</option>
-            <option>Marketing & Sales</option>
-            <option>IT</option>
-            <option>Product</option>
-          </select>
-
-          <select
-            value={form.role}
-            onChange={(e) =>
-              setForm({ ...form, role: e.target.value })
-            }
-            className="w-full border rounded-full px-4 py-3"
-          >
-            <option value="">Select Role</option>
-            <option>Admin</option>
-            <option>Contributor</option>
-          </select>
         </div>
 
-        <div className="flex gap-3 pt-3">
+        {/* Email */}
+        <div className="mb-4">
+          <label className="text-sm font-medium block mb-1">
+            Email Address
+          </label>
+          <input
+            placeholder="name@company.com"
+            value={form.email}
+            onChange={(e) =>
+              setForm({ ...form, email: e.target.value })
+            }
+            className={`w-full border rounded-full px-4 py-3 outline-none ${
+              form.email && !emailValid
+                ? "border-red-400"
+                : "border-gray-300"
+            }`}
+          />
+          {form.email && !emailValid && (
+            <p className="text-red-500 text-xs mt-1">
+              Please enter a valid email address.
+            </p>
+          )}
+        </div>
+
+        {/* Function */}
+        <div className="mb-4">
+          <FormDropdown
+            label="Function"
+            value={form.function}
+            placeholder="Select Function"
+            options={[
+              "Engineering",
+              "Marketing & Sales",
+              "IT",
+              "Product",
+              "Executive"
+            ]}
+            onChange={(val) =>
+              setForm({ ...form, function: val })
+            }
+          />
+        </div>
+
+        {/* Role */}
+        <div className="mb-6">
+          <FormDropdown
+            label="Role"
+            value={form.role}
+            placeholder="Select Role"
+            options={[
+              "Admin",
+              "Contributor"
+            ]}
+            onChange={(val) =>
+              setForm({ ...form, role: val })
+            }
+          />
+        </div>
+
+        {/* Buttons */}
+        <div className="flex justify-between gap-3">
           <button
             onClick={onClose}
-            className="w-full border border-blue-700 text-blue-700 rounded-lg py-2"
+            className="w-[48%] border border-blue-700 text-blue-700 rounded-md py-2.5"
           >
             Cancel
           </button>
@@ -118,15 +142,16 @@ export default function AddEditMemberModal({
           <button
             disabled={!isValid}
             onClick={() => onSubmit(form)}
-            className={`w-full rounded-lg py-2 ${
+            className={`w-[48%] rounded-md py-2.5 ${
               isValid
-                ? "bg-blue-700 text-white"
+                ? "bg-blue-700 text-white hover:bg-blue-800"
                 : "bg-gray-300 text-gray-500"
             }`}
           >
             {member ? "Save Changes" : "Add to Team"}
           </button>
         </div>
+
       </div>
     </div>
   )
