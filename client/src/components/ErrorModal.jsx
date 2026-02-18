@@ -11,25 +11,21 @@ export default function ErrorModal({
 
       <div className="bg-white w-[524px] rounded-2xl p-8 shadow-2xl text-center">
 
-        {/* Icon */}
         <div className="flex justify-center mb-4">
           <img src={ErrorIcon} alt="error" />
         </div>
 
-        {/* Title */}
         <h2 className="text-3xl font-bold text-gray-900 mb-3">
           Something Went Wrong
         </h2>
 
-        {/* Description */}
         <p className="text-gray-600 text-base leading-relaxed mb-6">
           We encountered an unexpected issue while processing your request. Please try again or contact support@complama.com.
         </p>
 
-        {/* Button */}
         <button
           onClick={onClose}
-          className="w-full bg-blue-700 text-white py-3 rounded-lg font-medium hover:bg-blue-800 transition"
+          className="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-blue-800 transition"
         >
           Back to Home
         </button>

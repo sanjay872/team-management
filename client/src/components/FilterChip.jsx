@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react"
+import CheronDown from "../assets/chevron-down.png"
 
 export default function FilterChip({
   label,
@@ -24,7 +25,6 @@ export default function FilterChip({
   return (
     <div className="relative" ref={ref}>
       
-      {/* Chip */}
       <button
         onClick={() => setOpen(!open)}
         className="flex items-center gap-[10px]
@@ -36,7 +36,6 @@ export default function FilterChip({
       >
         {value || label}
 
-        {/* Clear button */}
         {value ? (
           <span
             onClick={(e) => {
@@ -53,12 +52,11 @@ export default function FilterChip({
               open ? "rotate-180" : ""
             }`}
           >
-            ▲
+            <img src={CheronDown} alt="down" />
           </span>
         )}
       </button>
 
-      {/* Dropdown */}
       {open && (
         <div className="absolute mt-2 w-[200px] bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden z-50">
 
@@ -69,7 +67,7 @@ export default function FilterChip({
                 onChange(opt)
                 setOpen(false)
               }}
-              className={`block w-full text-left px-5 py-3 text-gray-800
+              className={`block w-full text-left px-5 border-b-1 border-gray-300 last:border-none py-3 text-gray-800
                 ${
                   value === opt
                     ? "bg-blue-100 font-medium"

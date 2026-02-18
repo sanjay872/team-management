@@ -1,3 +1,5 @@
+import LeftArrow from "../assets/arrow-left.png";
+
 export default function DeleteMemberModal({
   open,
   member,
@@ -16,18 +18,18 @@ export default function DeleteMemberModal({
         {/* Back */}
         <button
           onClick={onClose}
-          className="flex items-center gap-2 text-sm font-medium text-gray-800"
+          className="flex items-center gap-2 text-base font-bold text-gray-800"
         >
-          ← Back
+          <img src={LeftArrow} alt="left arrow" /> Back
         </button>
 
         {/* Title */}
-        <h2 className="text-2xl font-semibold text-gray-900 text-center mt-2">
+        <h2 className="text-3xl font-bold text-txt text-center mt-2">
           Delete Member?
         </h2>
 
         {/* Description */}
-        <p className="text-sm text-gray-600 text-center leading-relaxed">
+        <p className="text-sm font-normal text-txt text-center leading-relaxed">
           This will permanently remove this team member.
           <br />
           This action cannot be undone.
@@ -38,14 +40,14 @@ export default function DeleteMemberModal({
           
           <button
             onClick={onClose}
-            className="w-[220px] border border-red-400 text-red-500 py-3 rounded-md font-medium hover:bg-red-50 transition"
+            className="w-[220px] border border-[#FF6663] text-red-500 py-3 rounded-md font-medium hover:bg-red-50 transition"
           >
             Cancel
           </button>
 
           <button
             onClick={() => onConfirm(member.id)}
-            className="w-[220px] bg-red-500 text-white py-3 rounded-md font-medium hover:bg-red-600 transition"
+            className="w-[220px] bg-[#FF6663] text-white py-3 rounded-md font-medium hover:bg-red-600 transition"
           >
             Delete
           </button>

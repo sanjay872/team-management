@@ -73,7 +73,13 @@ export default function AddEditMemberModal({
 
         {/* Email */}
         <div className="mb-4">
-          <label className="text-sm font-medium block mb-1">
+          <label className={
+            `text-sm font-medium block mb-1 ${
+              form.email && !emailValid
+                ? "text-red-500"
+                : ""
+            }`
+          }>
             Email Address
           </label>
           <input
@@ -84,12 +90,12 @@ export default function AddEditMemberModal({
             }
             className={`w-full border rounded-full px-4 py-3 outline-none ${
               form.email && !emailValid
-                ? "border-red-400"
+                ? "border-red-400 text-red-500"
                 : "border-gray-300"
             }`}
           />
           {form.email && !emailValid && (
-            <p className="text-red-500 text-xs mt-1">
+            <p className="text-red-500 text-sm font-medium mt-1">
               Please enter a valid email address.
             </p>
           )}
@@ -130,11 +136,10 @@ export default function AddEditMemberModal({
           />
         </div>
 
-        {/* Buttons */}
         <div className="flex justify-between gap-3">
           <button
             onClick={onClose}
-            className="w-[48%] border border-blue-700 text-blue-700 rounded-md py-2.5"
+            className="w-[48%] border border-primary text-primary rounded-md py-2.5"
           >
             Cancel
           </button>
@@ -142,10 +147,10 @@ export default function AddEditMemberModal({
           <button
             disabled={!isValid}
             onClick={() => onSubmit(form)}
-            className={`w-[48%] rounded-md py-2.5 ${
+            className={`w-[48%] rounded-md py-2.5 text-sm ${
               isValid
-                ? "bg-blue-700 text-white hover:bg-blue-800"
-                : "bg-gray-300 text-gray-500"
+                ? "bg-primary text-white"
+                : "bg-[#7F818F] text-white font-bold"
             }`}
           >
             {member ? "Save Changes" : "Add to Team"}

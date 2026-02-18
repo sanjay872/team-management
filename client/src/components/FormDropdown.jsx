@@ -1,4 +1,5 @@
 import { useState, useRef, useEffect } from "react"
+import ChevronDrop from "../assets/chevron-down 1.png";
 
 export default function FormDropdown({
   label,
@@ -28,18 +29,17 @@ export default function FormDropdown({
       <label className="text-sm font-medium block mb-2">
         {label}
       </label>
-
-      {/* Input Field */}
+      
       <button
         type="button"
         onClick={() => setOpen(!open)}
         className="w-full h-[52px] 
-                   border-2 border-gray-800
+                   border-1 border-gray-200
                    rounded-full
                    px-5 flex items-center justify-between
-                   bg-white"
+                   bg-white outline-none"
       >
-        <span className="text-gray-800">
+        <span className={value?"text-gray-800":"text-gray-400"}>
           {value || placeholder}
         </span>
 
@@ -49,7 +49,7 @@ export default function FormDropdown({
               e.stopPropagation()
               onChange("")
             }}
-            className="text-gray-500"
+            className="text-gray-800"
           >
             ✕
           </span>
@@ -59,12 +59,11 @@ export default function FormDropdown({
               open ? "rotate-180" : ""
             }`}
           >
-            ▼
+            <img src={ChevronDrop} alt="drop" />
           </span>
         )}
       </button>
 
-      {/* Dropdown Menu */}
       {open && (
         <div className="absolute mt-2 w-full bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden z-50">
 
@@ -75,7 +74,7 @@ export default function FormDropdown({
                 onChange(opt)
                 setOpen(false)
               }}
-              className={`block w-full text-left px-6 py-3 
+              className={`block w-full text-left px-6 py-3 border-b-1 border-gray-300 last:border-none
                 ${
                   value === opt
                     ? "bg-blue-100 font-medium"

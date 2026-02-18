@@ -7,6 +7,7 @@ import Toast from "./components//Toast"
 import DeleteMemberModal from "./components/DeleteMemberModal"
 import FilterChip from "./components/FilterChip"
 import ErrorModal from "./components/ErrorModal"
+import DisclosureTrigger from "./assets/Icon Disclosure Trigger.png";
 
 function App() {
   const [members, setMembers] = useState([])
@@ -81,7 +82,7 @@ function App() {
           m.id === updated.id ? updated : m
         )
       )
-      setToast("Member Updated")
+      setToast("Changes Saved")
     } else {
       const res = await fetch("/api/team-members", {
         method: "POST",
@@ -126,12 +127,12 @@ function App() {
           />
         </div>
 
-        <div className="flex justify-between">
+        <div className="flex justify-between items-end">
           <div>
-            <h1 className="text-3xl font-bold">
+            <h1 className="text-4xl font-bold">
               Your Team
             </h1>
-            <p className="text-gray-500 mt-2">
+            <p className="text-gray-400 mt-2 text-base">
               Add new members, change roles or permissions,
               and view existing team members.
             </p>
@@ -142,7 +143,7 @@ function App() {
               setEditingMember(null)
               setModalOpen(true)
             }}
-            className="bg-blue-700 text-white px-6 py-3 rounded-lg"
+            className="bg-primary text-white px-6 py-3 rounded-lg w-[130px] h-[49px]"
           >
             Add Member
           </button>
@@ -172,107 +173,103 @@ function App() {
           />
 
         </div>
-
-        <div className="bg-white rounded-xl shadow">
-
-  <table className="w-full border-separate border-spacing-0">
+        
+        <table className="w-full border-separate border-spacing-0">
     
-    <thead>
-      <tr className="bg-blue-100 text-left text-gray-700">
-        <th className="px-6 py-4"></th>
-        <th className="px-6 py-4 font-semibold">Name</th>
-        <th className="px-6 py-4 font-semibold">Function</th>
-        <th className="px-6 py-4 font-semibold">Role</th>
-        <th className="px-6 py-4"></th>
-      </tr>
-    </thead>
+          <thead className="rounded-2xl text-sm font-bold">
+            <tr className="bg-blue-100 text-left text-gray-700">
+              <th className="px-6 py-4 rounded-tl-lg rounded-bl-lg"></th>
+              <th className="px-6 py-4">Name</th>
+              <th className="px-6 py-4">Function</th>
+              <th className="px-6 py-4">Role</th>
+              <th className="px-6 py-4 rounded-tr-lg rounded-br-lg"></th>
+            </tr>
+          </thead>
 
-    <tbody>
-      {members.length === 0 ? (
-        <tr>
-          <td colSpan="5" className="px-6 py-12 text-center text-gray-500">
-            Add your first team member to get started and start collaborating.
-          </td>
-        </tr>
-      ) : (
-        members.map((member) => (
-          <tr key={member.id} className="hover:bg-gray-50">
-            <td className="px-6 py-4">
-              <img src={Avatar} className="w-9 rounded-full" />
-            </td>
+          <tbody>
+            {members.length === 0 ? (
+              <tr>
+                <td colSpan="5" className="text-center pt-2 text-base">
+                  Add your first team member to get started and start collaborating.
+                </td>
+              </tr>
+            ) : (
+              members.map((member) => (
+                <tr key={member.id} className="even:bg-gray-100">
+                  <td className="px-6 py-4 rounded-tl-lg rounded-bl-lg">
+                    <img src={Avatar} className="w-9 rounded-full" />
+                  </td>
 
-            <td className="px-6 py-4">{member.fullName}</td>
+                  <td className="px-6 py-4 font-normal text-sm text-[#040820]">{member.fullName}</td>
 
-            <td className="px-6 py-4">
-              <span className="bg-gray-200 px-4 py-1 rounded-full text-sm">
-                {member.function}
-              </span>
-            </td>
+                  <td className="px-6 py-4">
+                    <span className="bg-gray-200 px-4 py-1 rounded-full font-bold text-sm text-gray-400">
+                      {member.function}
+                    </span>
+                  </td>
 
-            <td className="px-6 py-4">
-              <span
-                className={`px-4 py-1 rounded-full text-sm ${
-                  member.role === "Admin"
-                    ? "bg-green-200 text-green-700"
-                    : "bg-blue-200 text-blue-800"
-                }`}
-              >
-                {member.role}
-              </span>
-            </td>
+                  <td className="px-6 py-4 font-bold text-sm">
+                    <span
+                      className={`px-4 py-1 rounded-full ${
+                        member.role === "Admin"
+                          ? "bg-[#23C3AB40] text-[#23C3AB]"
+                          : "bg-[#004AAD40] text-primary"
+                      }`}
+                    >
+                      {member.role}
+                    </span>
+                  </td>
 
-            <td className="px-6 py-4 text-center relative">
+                  <td className="px-6 py-4 text-center relative rounded-tr-lg rounded-br-lg">
 
-            <button
-              onClick={(e) => {
-                e.stopPropagation()
-                setActiveDropdown(
-                  activeDropdown === member.id ? null : member.id
-                )
-              }}
-              className="text-lg"
-            >
-              ⋮
-            </button>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation()
+                      setActiveDropdown(
+                        activeDropdown === member.id ? null : member.id
+                      )
+                    }}
+                    className="text-lg"
+                  >
+                    <img src={DisclosureTrigger} alt="trigger" />
+                  </button>
 
-            {activeDropdown === member.id && (
-              <div
-                ref={dropdownRef}
-                className="absolute right-6 mt-2 w-32 bg-white border rounded-md shadow-lg z-50"
-              >
-                
-                <button
-                  onClick={() => {
-                    setEditingMember(member)
-                    setModalOpen(true)
-                    setActiveDropdown(null)
-                  }}
-                  className="block w-full text-left px-4 py-2 hover:bg-gray-100"
-                >
-                  Edit
-                </button>
+                  {activeDropdown === member.id && (
+                    <div
+                      ref={dropdownRef}
+                      className="absolute right-6 mt-2 w-32 bg-white rounded-md shadow-lg z-50"
+                    >
+                      
+                      <button
+                        onClick={() => {
+                          setEditingMember(member)
+                          setModalOpen(true)
+                          setActiveDropdown(null)
+                        }}
+                        className="block w-full text-left px-4 py-2 border-b-1 border-gray-300 hover:bg-gray-100"
+                      >
+                        Edit
+                      </button>
 
-                <button
-                  onClick={() => {
-                    setDeleteTarget(member)
-                    setDeleteOpen(true)
-                  }}
-                  className="block w-full text-left px-4 py-2 text-red-500 hover:bg-gray-100"
-                >
-                  Delete
-                </button>
+                      <button
+                        onClick={() => {
+                          setDeleteTarget(member)
+                          setDeleteOpen(true)
+                        }}
+                        className="block w-full text-left px-4 py-2 text-red-500 hover:bg-gray-100"
+                      >
+                        Delete
+                      </button>
 
-              </div>
+                    </div>
+                  )}
+                  </td>
+
+                </tr>
+              ))
             )}
-            </td>
-
-          </tr>
-        ))
-      )}
-     </tbody>
-  </table>
-</div>
-
+          </tbody>
+        </table>
 
         <AddEditMemberModal
           open={modalOpen}
