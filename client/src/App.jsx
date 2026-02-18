@@ -6,6 +6,7 @@ import AddEditMemberModal from "./components/AddEditMemberModal"
 import Toast from "./components//Toast"
 import DeleteMemberModal from "./components/DeleteMemberModal"
 import FilterChip from "./components/FilterChip"
+import ErrorModal from "./components/ErrorModal"
 
 function App() {
   const [members, setMembers] = useState([])
@@ -22,17 +23,26 @@ function App() {
   const [deleteOpen, setDeleteOpen] = useState(false)
   const [deleteTarget, setDeleteTarget] = useState(null)
   const dropdownRef = useRef(null)
+  const [error, setError] = useState(null)
 
   useEffect(() => {
     const fetchMembers = async () => {
+      try {
         const params = new URLSearchParams()
         if (search) params.append("q", search)
         if (role) params.append("role", role)
         if (func) params.append("function", func)
 
         const res = await fetch(`/api/team-members?${params}`)
+
+        if (!res.ok) throw new Error("Failed to fetch!")
+
         const data = await res.json()
-        setMembers(data)
+        setMembers(data);
+
+      } catch (err) {
+        setError(err.message)
+      }
     }
     fetchMembers()
   }, [search, role, func])
@@ -288,6 +298,12 @@ function App() {
             setDeleteOpen(false)
             setDeleteTarget(null)
           }}
+        />
+
+        <ErrorModal
+          open={!!error}
+          message={error}
+          onClose={() => setError(null)}
         />
 
       </div>
