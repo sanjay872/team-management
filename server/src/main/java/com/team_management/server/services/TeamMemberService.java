@@ -23,15 +23,24 @@ public class TeamMemberService {
 
     @Transactional
     public TeamMember create(TeamMemberRequest req) {
+
+        if (req.fullName() == null || req.fullName().trim().length() < 2) {
+            throw new IllegalArgumentException("Full name must be at least 2 characters");
+        }
+
+        if (!req.email().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+            throw new IllegalArgumentException("Invalid email format");
+        }
+
         if (repo.existsByEmailIgnoreCase(req.email())) {
             throw new ConflictException("Email already exists");
         }
 
-        if(req.id()!=null){
+        if (req.id() != null) {
             throw new ConflictException("Id already exist!");
         }
 
-        TeamMember teamMember=TeamMemberMapper.toTeamMember(req);
+        TeamMember teamMember = TeamMemberMapper.toTeamMember(req);
 
         return repo.save(teamMember);
     }
@@ -56,13 +65,20 @@ public class TeamMemberService {
 
     @Transactional
     public TeamMember update(Long id, TeamMemberRequest req) {
-        TeamMember tm = repo.findById(id).orElseThrow(() -> new NotFoundException("Team member not found"));
+
+        TeamMember tm = repo.findById(id)
+                .orElseThrow(() -> new NotFoundException("Team member not found"));
 
         if (repo.existsByEmailIgnoreCaseAndIdNot(req.email(), id)) {
             throw new ConflictException("Email already exists");
         }
 
-        return repo.save(TeamMemberMapper.toTeamMember(req));
+        tm.setFullName(req.fullName());
+        tm.setEmail(req.email());
+        tm.setRole(req.role());
+        tm.setFunction(req.function());
+
+        return repo.save(tm);
     }
 
     @Transactional
