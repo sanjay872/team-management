@@ -58,11 +58,16 @@ export default function AddEditMemberModal({
 
         {/* Name */}
         <div className="mb-4">
-          <label className="text-sm font-medium block mb-1">
+         <label
+            htmlFor="fullName"
+            className="text-sm font-medium block mb-1"
+          >
             Name
           </label>
+
           <input
-            placeholder="Jane Doe"
+            id="fullName"
+            placeholder="Full Name"
             value={form.fullName}
             onChange={(e) =>
               setForm({ ...form, fullName: e.target.value })
