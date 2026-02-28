@@ -188,12 +188,16 @@ function App() {
 
           <tbody>
             {members.length === 0 ? (
-              <tr>
-                <td colSpan="5" className="text-center pt-2 text-base">
-                  Add your first team member to get started and start collaborating.
-                </td>
-              </tr>
-            ) : (
+                <tr>
+                  <td colSpan="5" className="text-center pt-2 text-base">
+                    {search
+                      ? "No team members match your search"
+                      : role || func
+                      ? "No team members match the selected filters"
+                      : "Add your first team member to get started and start collaborating."}
+                  </td>
+                </tr>
+              ) : (
               members.map((member) => (
                 <tr key={member.id} className="even:bg-gray-100">
                   <td className="px-6 py-4 rounded-tl-lg rounded-bl-lg">
