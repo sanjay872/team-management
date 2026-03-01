@@ -227,6 +227,7 @@ function App() {
                   <td className="px-6 py-4 text-center relative rounded-tr-lg rounded-br-lg">
 
                   <button
+                    data-testid={`member-actions-${member.id}`}
                     onClick={(e) => {
                       e.stopPropagation()
                       setActiveDropdown(

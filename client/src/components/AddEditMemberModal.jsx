@@ -78,7 +78,7 @@ export default function AddEditMemberModal({
 
         {/* Email */}
         <div className="mb-4">
-          <label className={
+          <label htmlFor="email" className={
             `text-sm font-medium block mb-1 ${
               form.email && !emailValid
                 ? "text-red-500"
@@ -88,6 +88,7 @@ export default function AddEditMemberModal({
             Email Address
           </label>
           <input
+            id="email"
             placeholder="name@company.com"
             value={form.email}
             onChange={(e) =>
