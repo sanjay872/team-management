@@ -41,7 +41,7 @@ export default function AddEditMemberModal({
 
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50">
-      <div className="bg-white w-[420px] rounded-xl p-6 shadow-xl">
+      <div className="bg-white w-[420px] rounded-[8px] p-6 shadow-xl">
 
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
@@ -72,19 +72,26 @@ export default function AddEditMemberModal({
             onChange={(e) =>
               setForm({ ...form, fullName: e.target.value })
             }
-            className="w-full border border-gray-300 rounded-full px-4 py-3 outline-none focus:border-gray-400"
+            className={`
+            w-full rounded-full px-4 py-3 outline-none border
+            ${form.fullName
+              ? "border-dark"
+              : "border-gray-300"
+            }
+          `}
           />
         </div>
 
         {/* Email */}
         <div className="mb-4">
-          <label htmlFor="email" className={
-            `text-sm font-medium block mb-1 ${
+          <label
+            htmlFor="email"
+            className={`text-[14px] font-medium block mb-1 ${
               form.email && !emailValid
-                ? "text-red-500"
-                : ""
-            }`
-          }>
+                ? "text-danger"
+                : "text-dark"
+            }`}
+          >
             Email Address
           </label>
           <input
@@ -94,14 +101,19 @@ export default function AddEditMemberModal({
             onChange={(e) =>
               setForm({ ...form, email: e.target.value })
             }
-            className={`w-full border rounded-full px-4 py-3 outline-none ${
+            className={`
+            w-full rounded-full px-4 py-3 outline-none border
+            ${
               form.email && !emailValid
-                ? "border-red-400 text-red-500"
-                : "border-gray-300"
-            }`}
+                ? "border-danger text-danger"
+                : form.email
+                  ? "border-dark"
+                  : "border-gray-300"
+            }
+          `}
           />
           {form.email && !emailValid && (
-            <p className="text-red-500 text-sm font-medium mt-1">
+            <p className="text-danger text-[14px] font-bold mt-1">
               Please enter a valid email address.
             </p>
           )}
@@ -145,7 +157,7 @@ export default function AddEditMemberModal({
         <div className="flex justify-between gap-3">
           <button
             onClick={onClose}
-            className="w-[48%] border border-primary text-primary rounded-md py-2.5"
+            className="w-[48%] border border-primary text-primary rounded-[6px] py-2.5 hover:bg-accent hover:text-white transition"
           >
             Cancel
           </button>
@@ -153,10 +165,10 @@ export default function AddEditMemberModal({
           <button
             disabled={!isValid}
             onClick={() => onSubmit(form)}
-            className={`w-[48%] rounded-md py-2.5 text-sm ${
+            className={`w-[48%] rounded-[6px] py-2.5 text-sm transition ${
               isValid
-                ? "bg-primary text-white"
-                : "bg-[#7F818F] text-white font-bold"
+                ? "bg-primary text-white hover:bg-accent"
+                : "bg-muted text-white font-bold"
             }`}
           >
             {member ? "Save Changes" : "Add to Team"}

@@ -109,17 +109,26 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex justify-center">
-      <div className="w-[900px] mt-12 space-y-8">
-
-        <div className="relative w-[480px]">
+    <div className="min-h-screen bg-gray-50 flex justify-center p-[48px]">
+      <div className="w-[900px]">
+        <div className="relative w-[480px] mb-[60px]">
           <input
             value={search}
-            onChange={(e) =>
-              setSearch(e.target.value)
-            }
+            onChange={(e) => setSearch(e.target.value)}
             placeholder="Search by Name or Email Address"
-            className="w-full rounded-full border py-4 pl-6 pr-12"
+            className={`
+              w-full
+              rounded-full
+              py-4 pl-6 pr-12
+              text-[14px] font-normal
+              outline-none
+              border
+              ${
+                search
+                ? "border-dark"
+                : "border-muted"
+              }
+            `}
           />
           <img
             src={Search}
@@ -127,12 +136,13 @@ function App() {
           />
         </div>
 
-        <div className="flex justify-between items-end">
+        <div className="flex justify-between items-end mb-[60px]">
           <div>
-            <h1 className="text-4xl font-bold">
+            <h1 className="text-[36px] font-bold text-dark">
               Your Team
             </h1>
-            <p className="text-gray-400 mt-2 text-base">
+
+            <p className="text-[16px] font-normal text-dark mt-[4px]">
               Add new members, change roles or permissions,
               and view existing team members.
             </p>
@@ -143,7 +153,7 @@ function App() {
               setEditingMember(null)
               setModalOpen(true)
             }}
-            className="bg-primary text-white px-6 py-3 rounded-lg w-[130px] h-[49px]"
+            className="bg-primary text-white px-6 py-3 rounded-lg w-[130px] h-[49px] whitespace-nowrap"
           >
             Add Member
           </button>
@@ -174,15 +184,15 @@ function App() {
 
         </div>
         
-        <table className="w-full border-separate border-spacing-0">
+        <table className="w-full border-separate border-spacing-0 mt-[24px]">
     
-          <thead className="rounded-2xl text-sm font-bold">
-            <tr className="bg-blue-100 text-left text-gray-700">
-              <th className="px-6 py-4 rounded-tl-lg rounded-bl-lg"></th>
+          <thead className="text-sm font-bold">
+            <tr className="bg-chip text-left text-gray-700">
+              <th className="px-6 py-4 rounded-l-[4px]"></th>
               <th className="px-6 py-4">Name</th>
               <th className="px-6 py-4">Function</th>
               <th className="px-6 py-4">Role</th>
-              <th className="px-6 py-4 rounded-tr-lg rounded-br-lg"></th>
+              <th className="px-6 py-4 rounded-r-[4px]"></th>
             </tr>
           </thead>
 
@@ -198,33 +208,44 @@ function App() {
                   </td>
                 </tr>
               ) : (
-              members.map((member) => (
-                <tr key={member.id} className="even:bg-gray-100">
-                  <td className="px-6 py-4 rounded-tl-lg rounded-bl-lg">
-                    <img src={Avatar} className="w-9 rounded-full" />
-                  </td>
+                members.map((member, idx) => {
+                  const isGrey = idx % 2 === 1
 
-                  <td className="px-6 py-4 font-normal text-sm text-[#040820]">{member.fullName}</td>
+                  return (
+                    <tr key={member.id}>
+                      <td
+                        className={`px-6 py-4 ${isGrey ? "bg-gray-100 rounded-l-[4px]" : ""}`}
+                      >
+                        <img src={Avatar} className="w-9 rounded-full" />
+                      </td>
 
-                  <td className="px-6 py-4">
-                    <span className="bg-gray-200 px-4 py-1 rounded-full font-bold text-sm text-gray-400">
-                      {member.function}
-                    </span>
-                  </td>
+                      <td
+                        className={`px-6 py-4 font-normal text-sm text-dark ${isGrey ? "bg-gray-100" : ""}`}
+                      >
+                        {member.fullName}
+                      </td>
 
-                  <td className="px-6 py-4 font-bold text-sm">
-                    <span
-                      className={`px-4 py-1 rounded-full ${
-                        member.role === "Admin"
-                          ? "bg-[#23C3AB40] text-[#23C3AB]"
-                          : "bg-[#004AAD40] text-primary"
-                      }`}
-                    >
-                      {member.role}
-                    </span>
-                  </td>
+                      <td className={`px-6 py-4 ${isGrey ? "bg-gray-100" : ""}`}>
+                        <span className="px-4 py-1 rounded-full font-bold text-sm bg-muted/20 text-muted">
+                          {member.function}
+                        </span>
+                      </td>
 
-                  <td className="px-6 py-4 text-center relative rounded-tr-lg rounded-br-lg">
+                      <td className={`px-6 py-4 font-bold text-sm ${isGrey ? "bg-gray-100" : ""}`}>
+                        <span
+                          className={`px-4 py-1 rounded-full ${
+                            member.role === "Admin"
+                              ? "bg-accent/25 text-accent"
+                              : "bg-primary/25 text-primary"
+                          }`}
+                        >
+                          {member.role}
+                        </span>
+                      </td>
+
+                      <td
+                        className={`px-6 py-4 text-center relative ${isGrey ? "bg-gray-100 rounded-r-[4px]" : ""}`}
+                      >
 
                   <button
                     data-testid={`member-actions-${member.id}`}
@@ -271,7 +292,7 @@ function App() {
                   </td>
 
                 </tr>
-              ))
+              )})
             )}
           </tbody>
         </table>

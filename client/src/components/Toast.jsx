@@ -12,9 +12,17 @@ export default function Toast({ message, onClose }) {
   return (
     <div className="fixed bottom-8 left-1/2 -translate-x-1/2 z-50">
       
-      <div className="flex items-center gap-4 
-                      bg-emerald-500 text-white 
-                      px-6 py-3 rounded-lg shadow-lg">
+      <div
+          className="
+            flex items-center
+            gap-[28px]
+            bg-accent
+            text-white
+            px-[12px] py-[8px]
+            rounded-[6px]
+            shadow-lg
+          "
+        >
 
         <span className="text-sm font-bold">
           {message}

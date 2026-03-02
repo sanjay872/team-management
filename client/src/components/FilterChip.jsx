@@ -30,9 +30,9 @@ export default function FilterChip({
         className="flex items-center gap-[10px]
                    h-[40px]
                    px-[20px] py-[12px]
-                   bg-[#C7E2FF]
+                   bg-chip
                    rounded-[40px]
-                   text-blue-800 font-semibold"
+                   text-primary font-semibold"
       >
         {value || label}
 
@@ -58,7 +58,7 @@ export default function FilterChip({
       </button>
 
       {open && (
-        <div className="absolute mt-2 w-[200px] bg-white rounded-xl shadow-lg border border-gray-100 overflow-hidden z-50">
+          <div className="absolute mt-[8px] w-[200px] bg-white rounded-xl shadow-lg border border-gray-100 py-[4px] z-50">
 
           {options.map((opt) => (
             <button
@@ -67,14 +67,22 @@ export default function FilterChip({
                 onChange(opt)
                 setOpen(false)
               }}
-              className={`block w-full text-left px-5 border-b-1 border-gray-300 last:border-none py-3 text-gray-800
-                ${
-                  value === opt
-                    ? "bg-blue-100 font-medium"
-                    : "hover:bg-gray-50"
-                }`}
+              className={`
+              block w-full text-left
+              px-[0] py-[4px]
+              text-gray-800
+            `}
             >
-              {opt}
+              <div
+                className={`
+                  px-[16px] py-[6px]
+                  ${value === opt ? "bg-chip" : "hover:bg-gray-50"}
+                `}
+              >
+                {opt}
+              </div>
+
+              <div className="mt-[6px] border-t border-gray-300"></div>
             </button>
           ))}
 
