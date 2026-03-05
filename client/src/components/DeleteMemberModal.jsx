@@ -12,7 +12,7 @@ export default function DeleteMemberModal({
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50">
       
       <div
-        className="bg-[#F9FAFF] w-[520px] rounded-[10px] p-8 shadow-xl flex flex-col gap-3"
+        className="bg-surface-soft w-[520px] rounded-[10px] p-8 shadow-xl flex flex-col gap-3"
       >
         
         {/* Back */}
@@ -40,14 +40,14 @@ export default function DeleteMemberModal({
           
           <button
             onClick={onClose}
-            className="w-[220px] border border-[#FF6663] text-red-500 py-3 rounded-md font-medium hover:bg-red-50 transition"
+            className="w-[220px] border border-danger text-danger py-3 rounded-[6px] font-medium"
           >
             Cancel
           </button>
 
           <button
             onClick={() => onConfirm(member.id)}
-            className="w-[220px] bg-[#FF6663] text-white py-3 rounded-md font-medium hover:bg-red-600 transition"
+            className="w-[220px] bg-danger text-white py-3 rounded-[6px] font-medium"
           >
             Delete
           </button>

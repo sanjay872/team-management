@@ -33,57 +33,68 @@ export default function FormDropdown({
       <button
         type="button"
         onClick={() => setOpen(!open)}
-        className="w-full h-[52px] 
-                   border-1 border-gray-200
-                   rounded-full
-                   px-5 flex items-center justify-between
-                   bg-white outline-none"
+        className={`w-full
+           border-[1.5px]
+           rounded-[40px]
+           py-[16px]
+           pl-[25px]
+           pr-[20px]
+           flex items-center justify-between
+           ${value ? "border-[#040820] text-[#040820]" : "border-[#7F818F]"}
+           bg-white outline-none
+           font-['Open_Sans'] text-[14px]`}
       >
-        <span className={value?"text-gray-800":"text-gray-400"}>
+          <span
+          className={
+            value
+              ? "text-dark"
+              : "text-muted"
+          }
+        >
           {value || placeholder}
         </span>
 
-        {value ? (
-          <span
-            onClick={(e) => {
-              e.stopPropagation()
-              onChange("")
-            }}
-            className="text-gray-800"
-          >
-            ✕
-          </span>
-        ) : (
-          <span
+        <span
             className={`transition-transform ${
               open ? "rotate-180" : ""
             }`}
           >
             <img src={ChevronDrop} alt="drop" />
-          </span>
-        )}
+        </span>
       </button>
 
       {open && (
-        <div className="absolute mt-2 w-full bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden z-50">
+        <div className="absolute mt-[8px] w-full bg-white rounded-xl shadow-lg border border-muted/40 py-[4px] z-50">
 
-          {options.map((opt) => (
-            <button
-              key={opt}
-              onClick={() => {
-                onChange(opt)
-                setOpen(false)
-              }}
-              className={`block w-full text-left px-6 py-3 border-b-1 border-gray-300 last:border-none
-                ${
-                  value === opt
-                    ? "bg-blue-100 font-medium"
-                    : "hover:bg-gray-50"
-                }`}
-            >
-              {opt}
-            </button>
-          ))}
+          {options.map((opt, index) => {
+            const isLast = index === options.length - 1
+
+            return (
+              <button
+                key={opt}
+                onClick={() => {
+                  onChange(opt)
+                  setOpen(false)
+                }}
+                className="block w-full text-left py-[4px]"
+              >
+                {/* Blue selection area */}
+                <div
+                  className={`
+                    py-[6px] px-[16px]
+                    ${value === opt ? "bg-blue-100" : "hover:bg-[#C7E2FF]"}
+                  `}
+                >
+                  {opt}
+                </div>
+
+                {/* Divider (only if NOT last item) */}
+                {!isLast && (
+                  <div className="mt-[6px] border-t border-gray-300"></div>
+                )}
+              </button>
+            )
+          })}
 
         </div>
       )}

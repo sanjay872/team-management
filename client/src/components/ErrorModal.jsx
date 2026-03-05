@@ -15,7 +15,7 @@ export default function ErrorModal({
           <img src={ErrorIcon} alt="error" />
         </div>
 
-        <h2 className="text-3xl font-bold text-gray-900 mb-3">
+        <h2 className="text-3xl font-bold text-dark mb-3">
           Something Went Wrong
         </h2>
 
@@ -25,7 +25,7 @@ export default function ErrorModal({
 
         <button
           onClick={onClose}
-          className="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-blue-800 transition"
+          className="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-primary/90 transition"
         >
           Back to Home
         </button>

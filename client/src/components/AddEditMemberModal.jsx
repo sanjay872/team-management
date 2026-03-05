@@ -41,7 +41,7 @@ export default function AddEditMemberModal({
 
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50">
-      <div className="bg-white w-[420px] rounded-xl p-6 shadow-xl">
+      <div className="bg-white w-[420px] rounded-[8px] p-6 shadow-xl">
 
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
@@ -60,7 +60,7 @@ export default function AddEditMemberModal({
         <div className="mb-4">
          <label
             htmlFor="fullName"
-            className="text-sm font-medium block mb-1"
+            className="block mb-1 font-['Open_Sans'] text-[14px] font-bold text-[#040820]"
           >
             Name
           </label>
@@ -72,19 +72,33 @@ export default function AddEditMemberModal({
             onChange={(e) =>
               setForm({ ...form, fullName: e.target.value })
             }
-            className="w-full border border-gray-300 rounded-full px-4 py-3 outline-none focus:border-gray-400"
+            className={`
+            w-full
+            rounded-[40px]
+            px-[25px]
+            py-[16px]
+            border-[1.5px]
+            bg-white
+            outline-none
+            font-['Open_Sans']
+            text-[14px]
+            text-[#040820]
+            placeholder:text-[#7F818F]
+            ${form.fullName ? "border-[#040820]" : "border-[#7F818F]"}
+            `}
           />
         </div>
 
         {/* Email */}
         <div className="mb-4">
-          <label htmlFor="email" className={
-            `text-sm font-medium block mb-1 ${
+          <label
+            htmlFor="email"
+            className={`text-[14px] font-medium block mb-1 ${
               form.email && !emailValid
-                ? "text-red-500"
-                : ""
-            }`
-          }>
+                ? "text-danger"
+                : "text-dark"
+            }`}
+          >
             Email Address
           </label>
           <input
@@ -94,14 +108,28 @@ export default function AddEditMemberModal({
             onChange={(e) =>
               setForm({ ...form, email: e.target.value })
             }
-            className={`w-full border rounded-full px-4 py-3 outline-none ${
+           className={`
+            w-full
+            rounded-[40px]
+            px-[25px]
+            py-[16px]
+            border-[1.5px]
+            bg-white
+            outline-none
+            font-['Open_Sans']
+            text-[14px]
+            placeholder:text-[#7F818F]
+            ${
               form.email && !emailValid
-                ? "border-red-400 text-red-500"
-                : "border-gray-300"
-            }`}
+                ? "border-[#FF6663] text-[#FF6663]"
+                : form.email
+                  ? "border-[#040820] text-[#040820]"
+                  : "border-[#7F818F]"
+            }
+            `}
           />
           {form.email && !emailValid && (
-            <p className="text-red-500 text-sm font-medium mt-1">
+            <p className="text-danger text-[14px] font-bold mt-[8px] font-['Open_Sans']">
               Please enter a valid email address.
             </p>
           )}
@@ -145,7 +173,16 @@ export default function AddEditMemberModal({
         <div className="flex justify-between gap-3">
           <button
             onClick={onClose}
-            className="w-[48%] border border-primary text-primary rounded-md py-2.5"
+            className="
+              w-[48%]
+              border border-primary
+              text-primary
+              rounded-[6px]
+              py-2.5
+              bg-transparent
+              hover:border-[#23C3AB]
+              hover:text-[#23C3AB]
+            "
           >
             Cancel
           </button>
@@ -153,10 +190,10 @@ export default function AddEditMemberModal({
           <button
             disabled={!isValid}
             onClick={() => onSubmit(form)}
-            className={`w-[48%] rounded-md py-2.5 text-sm ${
+            className={`w-[48%] rounded-[6px] py-2.5 text-sm transition ${
               isValid
-                ? "bg-primary text-white"
-                : "bg-[#7F818F] text-white font-bold"
+                ? "bg-primary text-white hover:bg-accent"
+                : "bg-muted text-white font-bold"
             }`}
           >
             {member ? "Save Changes" : "Add to Team"}
