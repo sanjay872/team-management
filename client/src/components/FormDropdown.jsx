@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from "react"
 import ChevronDrop from "../assets/chevron-down 1.png";
+import Multiply from "../assets/multiply-add-form.png"
 
 export default function FormDropdown({
   label,
@@ -54,13 +55,24 @@ export default function FormDropdown({
           {value || placeholder}
         </span>
 
-        <span
-            className={`transition-transform ${
-              open ? "rotate-180" : ""
-            }`}
-          >
-            <img src={ChevronDrop} alt="drop" />
-        </span>
+        {open ? (
+          <img
+            src={Multiply}
+            alt="clear"
+            className="w-[18px] h-[18px]"
+            onClick={(e) => {
+              e.stopPropagation()
+              onChange("")
+              setOpen(false)
+            }}
+          />
+        ) : (
+          <img
+            src={ChevronDrop}
+            alt="drop"
+            className="w-[18px] h-[18px]"
+          />
+        )}
       </button>
 
       {open && (

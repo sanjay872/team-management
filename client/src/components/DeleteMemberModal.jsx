@@ -40,7 +40,15 @@ export default function DeleteMemberModal({
           
           <button
             onClick={onClose}
-            className="w-[220px] border border-danger text-danger py-3 rounded-[6px] font-medium"
+            className="
+              w-[220px]
+              px-[20px] py-[16px]
+              border-2 border-[#FF6663]
+              text-[#FF6663]
+              rounded-[6px]
+              font-['Open_Sans'] text-[14px] font-extrabold leading-[120%]
+              bg-transparent
+            "
           >
             Cancel
           </button>
