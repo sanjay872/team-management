@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react"
 import FormDropdown from "./FormDropdown"
+import CloseIcon from '../assets/close-multiply.png'
 
 export default function AddEditMemberModal({
   open,
@@ -41,7 +42,15 @@ export default function AddEditMemberModal({
 
   return (
     <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex justify-center items-center z-50">
-      <div className="bg-white w-[420px] rounded-[8px] p-6 shadow-xl">
+      <div className="
+      w-[520px]
+      flex flex-col
+      gap-[10px]
+      px-[30px] pt-[25px] pb-[30px]
+      rounded-[8px]
+      bg-[#F9FAFF]
+      shadow-[2px_2px_4px_0_rgba(4,8,32,0.10)]
+    ">
 
         {/* Header */}
         <div className="flex justify-between items-center mb-6">
@@ -52,7 +61,7 @@ export default function AddEditMemberModal({
             onClick={onClose}
             className="text-gray-500 text-lg"
           >
-            ✕
+            <img src={CloseIcon} alt="close icon" />
           </button>
         </div>
 
@@ -170,31 +179,39 @@ export default function AddEditMemberModal({
           />
         </div>
 
-        <div className="flex justify-between gap-3">
+        <div className="flex justify-center gap-[32px]">
           <button
             onClick={onClose}
             className="
-              w-[48%]
-              border border-primary
-              text-primary
-              rounded-[6px]
-              py-2.5
-              bg-transparent
-              hover:border-[#23C3AB]
-              hover:text-[#23C3AB]
-            "
-          >
+            w-[48%]
+            px-[20px] py-[16px]
+            border-2 border-primary
+            text-primary
+            rounded-[6px]
+            font-['Open_Sans'] text-[14px] font-extrabold leading-[120%]
+            bg-transparent
+            hover:border-[#23C3AB]
+            hover:text-[#23C3AB]
+            transition-colors
+            ">
             Cancel
           </button>
 
           <button
             disabled={!isValid}
             onClick={() => onSubmit(form)}
-            className={`w-[48%] rounded-[6px] py-2.5 text-sm transition ${
+            className={`
+            w-[48%]
+            px-[20px] py-[16px]
+            rounded-[6px]
+            font-['Open_Sans'] text-[14px] font-bold leading-[120%]
+            transition-colors
+            ${
               isValid
-                ? "bg-primary text-white hover:bg-accent"
-                : "bg-muted text-white font-bold"
-            }`}
+                ? "bg-primary text-white hover:bg-[#23C3AB]"
+                : "bg-muted text-white cursor-not-allowed"
+            }
+            `}
           >
             {member ? "Save Changes" : "Add to Team"}
           </button>
