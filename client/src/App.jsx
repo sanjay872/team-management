@@ -153,7 +153,16 @@ function App() {
               setEditingMember(null)
               setModalOpen(true)
             }}
-            className="bg-primary text-white px-6 py-3 rounded-lg w-[130px] h-[49px] whitespace-nowrap"
+            className="
+              px-[20px] py-[16px]
+              rounded-[6px]
+              bg-[#004AAD]
+              text-[#F9FAFF]
+              font-['Open_Sans']
+              text-[14px]
+              font-bold
+              leading-[120%]
+            "
           >
             Add Member
           </button>
@@ -266,26 +275,48 @@ function App() {
                       className="absolute right-6 mt-2 w-32 bg-white rounded-md shadow-lg z-50"
                     >
                       
-                      <button
-                        onClick={() => {
-                          setEditingMember(member)
-                          setModalOpen(true)
-                          setActiveDropdown(null)
-                        }}
-                        className="block w-full text-left px-4 py-2 border-b-1 border-gray-300 hover:bg-gray-100"
-                      >
-                        Edit
-                      </button>
+                      {/* Edit */}
+<div className="py-[4px]">
+  <button
+    onClick={() => {
+      setEditingMember(member)
+      setModalOpen(true)
+      setActiveDropdown(null)
+    }}
+    className="
+      block w-full text-left
+      px-[16px] py-[6px]
+      text-[14px]
+      font-normal
+      text-[#040820]
+      hover:bg-[#C7E2FF]
+    "
+  >
+    Edit
+  </button>
+</div>
 
-                      <button
-                        onClick={() => {
-                          setDeleteTarget(member)
-                          setDeleteOpen(true)
-                        }}
-                        className="block w-full text-left px-4 py-2 text-red-500 hover:bg-gray-100"
-                      >
-                        Delete
-                      </button>
+<div className="mt-[6px] h-px bg-[#7F818F40]" />
+
+{/* Delete */}
+<div className="py-[4px]">
+  <button
+    onClick={() => {
+      setDeleteTarget(member)
+      setDeleteOpen(true)
+    }}
+    className="
+      block w-full text-left
+      px-[16px] py-[6px]
+      text-[14px]
+      font-normal
+      text-[#FF6663]
+      hover:bg-[#C7E2FF]
+    "
+  >
+    Delete
+  </button>
+</div>
 
                     </div>
                   )}

@@ -60,7 +60,7 @@ export default function AddEditMemberModal({
         <div className="mb-4">
          <label
             htmlFor="fullName"
-            className="text-sm font-medium block mb-1"
+            className="block mb-1 font-['Open_Sans'] text-[14px] font-bold text-[#040820]"
           >
             Name
           </label>
@@ -73,12 +73,19 @@ export default function AddEditMemberModal({
               setForm({ ...form, fullName: e.target.value })
             }
             className={`
-            w-full rounded-full px-4 py-3 outline-none border
-            ${form.fullName
-              ? "border-dark"
-              : "border-gray-300"
-            }
-          `}
+            w-full
+            rounded-[40px]
+            px-[25px]
+            py-[16px]
+            border-[1.5px]
+            bg-white
+            outline-none
+            font-['Open_Sans']
+            text-[14px]
+            text-[#040820]
+            placeholder:text-[#7F818F]
+            ${form.fullName ? "border-[#040820]" : "border-[#7F818F]"}
+            `}
           />
         </div>
 
@@ -101,19 +108,28 @@ export default function AddEditMemberModal({
             onChange={(e) =>
               setForm({ ...form, email: e.target.value })
             }
-            className={`
-            w-full rounded-full px-4 py-3 outline-none border
+           className={`
+            w-full
+            rounded-[40px]
+            px-[25px]
+            py-[16px]
+            border-[1.5px]
+            bg-white
+            outline-none
+            font-['Open_Sans']
+            text-[14px]
+            placeholder:text-[#7F818F]
             ${
               form.email && !emailValid
-                ? "border-danger text-danger"
+                ? "border-[#FF6663] text-[#FF6663]"
                 : form.email
-                  ? "border-dark"
-                  : "border-gray-300"
+                  ? "border-[#040820] text-[#040820]"
+                  : "border-[#7F818F]"
             }
-          `}
+            `}
           />
           {form.email && !emailValid && (
-            <p className="text-danger text-[14px] font-bold mt-1">
+            <p className="text-danger text-[14px] font-bold mt-[8px] font-['Open_Sans']">
               Please enter a valid email address.
             </p>
           )}
@@ -157,7 +173,16 @@ export default function AddEditMemberModal({
         <div className="flex justify-between gap-3">
           <button
             onClick={onClose}
-            className="w-[48%] border border-primary text-primary rounded-[6px] py-2.5 hover:bg-accent hover:text-white transition"
+            className="
+              w-[48%]
+              border border-primary
+              text-primary
+              rounded-[6px]
+              py-2.5
+              bg-transparent
+              hover:border-[#23C3AB]
+              hover:text-[#23C3AB]
+            "
           >
             Cancel
           </button>

@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from "react"
-import CheronDown from "../assets/chevron-down.png"
+import ChevronDown from "../assets/chevron-down.png"
+import ChevronUp from "../assets/chevron-up.png"
+import Multiply from "../assets/multiply.png" // 16x16 icon
 
 export default function FilterChip({
   label,
@@ -24,70 +26,99 @@ export default function FilterChip({
 
   return (
     <div className="relative" ref={ref}>
-      
+      {/* Interaction Button */}
       <button
         onClick={() => setOpen(!open)}
-        className="flex items-center gap-[10px]
-                   h-[40px]
-                   px-[20px] py-[12px]
-                   bg-chip
-                   rounded-[40px]
-                   text-primary font-semibold"
+       className={`
+        flex items-center gap-[10px]
+        px-[20px] py-[12px]
+        rounded-full
+        text-[14px] font-bold leading-[120%]
+        text-[#004AAD]
+        border border-transparent
+        ${
+          open
+            ? "bg-[#C7E2FF]"
+            : "bg-[#C7E2FF] hover:bg-transparent hover:border-[#004AAD]"
+        }
+      `}
       >
         {value || label}
 
+        {/* Icon Logic */}
         {value ? (
-          <span
+          <img
+            src={Multiply}
+            alt="clear"
+            className="w-[16px] h-[16px]"
             onClick={(e) => {
               e.stopPropagation()
               onChange("")
             }}
-            className="ml-1 cursor-pointer text-blue-900"
-          >
-            ✕
-          </span>
+          />
+        ) : open ? (
+          <img
+            src={ChevronUp}
+            alt="up"
+            className="w-[10px] h-[5px]"
+          />
         ) : (
-          <span
-            className={`transition-transform ${
-              open ? "rotate-180" : ""
-            }`}
-          >
-            <img src={CheronDown} alt="down" />
-          </span>
+          <img
+            src={ChevronDown}
+            alt="down"
+            className="w-[10px] h-[5px]"
+          />
         )}
       </button>
 
+      {/* Dropdown */}
       {open && (
-          <div className="absolute mt-[8px] w-[200px] bg-white rounded-xl shadow-lg border border-gray-100 py-[4px] z-50">
+      <div
+        className="
+          absolute mt-[8px]
+          w-[180px]
+          rounded-[4px]
+          bg-[#F9FAFF]
+          shadow-md
+          py-[4px]
+        "
+      >
+        {options.map((opt, index) => {
+          const isLast = index === options.length - 1
 
-          {options.map((opt) => (
-            <button
-              key={opt}
-              onClick={() => {
-                onChange(opt)
-                setOpen(false)
-              }}
-              className={`
-              block w-full text-left
-              px-[0] py-[4px]
-              text-gray-800
-            `}
-            >
-              <div
-                className={`
-                  px-[16px] py-[6px]
-                  ${value === opt ? "bg-chip" : "hover:bg-gray-50"}
-                `}
-              >
-                {opt}
+          return (
+            <div key={opt} className="px-0">
+              {/* 4px stack padding */}
+              <div className="py-[4px]">
+                {/* Blue selection area */}
+                <button
+                  onClick={() => {
+                    onChange(opt)
+                    setOpen(false)
+                  }}
+                  className={`
+                    w-full text-left
+                    px-[16px] py-[6px]
+                    text-[14px]
+                    font-normal
+                    text-[#040820]
+                    ${value === opt ? "bg-[#C7E2FF]" : ""}
+                    hover:bg-[#C7E2FF]
+                  `}
+                >
+                  {opt}
+                </button>
               </div>
 
-              <div className="mt-[6px] border-t border-gray-300"></div>
-            </button>
-          ))}
-
-        </div>
-      )}
+              {/* Divider (only if not last item) */}
+              {!isLast && (
+                <div className="mt-[6px] h-px bg-[#7F818F40]" />
+              )}
+            </div>
+          )
+        })}
+      </div>
+    )}
     </div>
   )
 }
