@@ -102,7 +102,7 @@ export default function AddEditMemberModal({
         <div className="mb-4">
           <label
             htmlFor="email"
-            className={`text-[14px] font-medium block mb-1 ${
+            className={`text-[14px] font-bold block mb-1 ${
               form.email && !emailValid
                 ? "text-danger"
                 : "text-dark"

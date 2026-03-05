@@ -27,7 +27,7 @@ export default function FormDropdown({
   return (
     <div className="relative mb-4" ref={ref}>
       
-      <label className="text-sm font-medium block mb-2">
+      <label className="text-sm font-bold block mb-2">
         {label}
       </label>
       
